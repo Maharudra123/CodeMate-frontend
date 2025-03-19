@@ -9,6 +9,7 @@ import { BASE_URL } from "../utils/contants";
 const Login = () => {
   const [emailId, setEmailId] = useState("dimplemathe@gmail.com");
   const [password, setPassword] = useState("dimpleYash@123");
+  const [error, setError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleLogin = async () => {
@@ -21,11 +22,11 @@ const Login = () => {
         },
         { withCredentials: true }
       );
-      console.log(response.data);
       dispatch(addUser(response.data));
       navigate("/");
     } catch (error) {
       console.error(error);
+      setError(error?.response?.data || "something went wrong");
     }
   };
   return (
@@ -63,6 +64,8 @@ const Login = () => {
               required
             />
           </label>
+
+          <p className="text-error">ERROR: {error}</p>
 
           {/* Remember Me and Forgot Password */}
           <div className="flex justify-between items-center mt-3">
