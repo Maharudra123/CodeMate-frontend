@@ -5,7 +5,6 @@ import UserCard from "./UserCard";
 
 const Profile = () => {
   const user = useSelector((state) => state.user);
-  console.log(user);
   return (
     <div className="flex justify-center items-center">
       <UpdateProfile user={user} />

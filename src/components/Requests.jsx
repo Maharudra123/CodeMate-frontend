@@ -28,7 +28,7 @@ const Requests = () => {
 
   useEffect(() => {
     fetchRequest();
-  }, [fetchRequest]);
+  }, []);
 
   const reviewRequest = async (status, _id) => {
     try {
