@@ -28,8 +28,20 @@ const Requests = () => {
 
   useEffect(() => {
     fetchRequest();
-  }, []);
+  }, [fetchRequest]);
 
+  const reviewRequest = async (status, _id) => {
+    try {
+      const res = await axios.post(
+        BASE_URL + `/request/review/${status}/${_id}`,
+        {},
+        { withCredentials: true }
+      );
+      console.log(res);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   // Loading state
   if (isLoading) {
     return (
@@ -141,13 +153,13 @@ const Requests = () => {
                 <div className="flex gap-2 justify-between">
                   <button
                     className="flex-1 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-300"
-                    onClick={() => handleAccept(_id)}
+                    onClick={() => reviewRequest("accepted", request._id)}
                   >
                     Accept
                   </button>
                   <button
                     className="flex-1 px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400"
-                    onClick={() => handleDecline(_id)}
+                    onClick={() => reviewRequest("rejected", request._id)}
                   >
                     Reject
                   </button>
@@ -159,18 +171,6 @@ const Requests = () => {
       </div>
     </div>
   );
-};
-
-// Helper function to handle accepting a request (to be implemented)
-const handleAccept = (userId) => {
-  console.log("Accept request from user:", userId);
-  // Implement the accept logic here
-};
-
-// Helper function to handle declining a request (to be implemented)
-const handleDecline = (userId) => {
-  console.log("Decline request from user:", userId);
-  // Implement the decline logic here
 };
 
 export default Requests;
