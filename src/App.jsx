@@ -7,6 +7,9 @@ import Profile from "./components/Profile";
 import { Provider } from "react-redux";
 import appStore from "./utils/store/appStore";
 import Feed from "./components/Feed";
+import UpdateProfile from "./components/UpdateProfile";
+import { ToastContainer, toast } from "react-toastify";
+import { Bounce } from "react-toastify";
 
 const App = () => {
   return (
@@ -20,6 +23,19 @@ const App = () => {
           </Route>
         </Routes>
       </BrowserRouter>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transition={Bounce}
+      />
     </Provider>
   );
 };
