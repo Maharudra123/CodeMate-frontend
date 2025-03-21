@@ -10,6 +10,7 @@ const Login = () => {
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   // Signup specific state
   const [firstName, setFirstName] = useState("");
@@ -31,6 +32,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
 
     try {
       if (isLogin) {
@@ -55,15 +57,17 @@ const Login = () => {
     } catch (error) {
       console.error(error);
       setError(error?.response?.data?.message || "Something went wrong");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="card w-full max-w-md bg-white shadow-2xl rounded-lg overflow-hidden">
-        <div className="p-8">
+    <div className="min-h-screen bg-base-200 flex items-center justify-center px-4">
+      <div className="card w-full max-w-md bg-base-100 shadow-xl">
+        <div className="card-body">
           {/* Header */}
-          <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
+          <h2 className="card-title text-2xl justify-center mb-4">
             {isLogin ? "Welcome Back" : "Create Account"}
           </h2>
 
@@ -72,27 +76,27 @@ const Login = () => {
             {/* First & Last Name (Signup only) */}
             {!isLogin && (
               <div className="grid grid-cols-2 gap-4 mb-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    First Name
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">First Name</span>
                   </label>
                   <input
                     type="text"
                     placeholder="John"
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="input input-bordered w-full"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                     required
                   />
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Last Name
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Last Name</span>
                   </label>
                   <input
                     type="text"
                     placeholder="Doe"
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="input input-bordered w-full"
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                     required
@@ -102,14 +106,14 @@ const Login = () => {
             )}
 
             {/* Email Field */}
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Email
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Email</span>
               </label>
               <input
                 type="email"
                 placeholder="your.email@example.com"
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="input input-bordered w-full"
                 value={emailId}
                 onChange={(e) => setEmailId(e.target.value)}
                 required
@@ -117,64 +121,85 @@ const Login = () => {
             </div>
 
             {/* Password Field */}
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Password
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Password</span>
               </label>
               <input
                 type="password"
                 placeholder={
                   isLogin ? "Enter your password" : "Create a strong password"
                 }
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="input input-bordered w-full"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
+              {isLogin && (
+                <label className="label">
+                  <a href="#" className="label-text-alt link link-hover">
+                    Forgot password?
+                  </a>
+                </label>
+              )}
             </div>
 
             {/* Error Message */}
             {error && (
-              <div className="mb-4 p-2 bg-red-100 text-red-700 rounded-md text-sm">
-                {error}
+              <div className="alert alert-error mt-4">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="stroke-current shrink-0 h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                <span>{error}</span>
               </div>
             )}
 
-            {/* Remember Me and Forgot Password (Login only) */}
+            {/* Remember Me (Login only) */}
             {isLogin && (
-              <div className="flex justify-between items-center mb-6">
-                <label className="flex items-center">
+              <div className="form-control mt-4">
+                <label className="label cursor-pointer justify-start">
                   <input
                     type="checkbox"
-                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    className="checkbox checkbox-primary checkbox-sm mr-2"
                   />
-                  <span className="ml-2 text-sm text-gray-600">
-                    Remember me
-                  </span>
+                  <span className="label-text">Remember me</span>
                 </label>
-                <a href="#" className="text-sm text-blue-600 hover:underline">
-                  Forgot password?
-                </a>
               </div>
             )}
 
             {/* Submit Button */}
-            <button
-              type="submit"
-              className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md shadow-sm transition duration-200"
-            >
-              {isLogin ? "Login" : "Create Account"}
-            </button>
+            <div className="form-control mt-6">
+              <button
+                type="submit"
+                className={`btn btn-primary ${loading ? "loading" : ""}`}
+                disabled={loading}
+              >
+                {isLogin ? "Login" : "Create Account"}
+              </button>
+            </div>
           </form>
 
+          {/* Divider */}
+          <div className="divider">OR</div>
+
           {/* Toggle between login and signup */}
-          <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600">
+          <div className="text-center">
+            <p className="text-sm">
               {isLogin ? "Don't have an account?" : "Already have an account?"}
               <button
                 type="button"
                 onClick={toggleForm}
-                className="ml-1 text-blue-600 hover:underline focus:outline-none"
+                className="btn btn-link btn-sm px-1 min-h-0 h-auto"
               >
                 {isLogin ? "Sign up" : "Login"}
               </button>

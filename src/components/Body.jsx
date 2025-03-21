@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import axios from "axios";
@@ -10,8 +10,10 @@ import { addUser } from "../utils/store/userSlice";
 const Body = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const userData = useSelector((store) => store.user);
+
   const fetchUser = async () => {
     try {
       if (userData) return;
@@ -19,12 +21,14 @@ const Body = () => {
         withCredentials: true,
       });
       dispatch(addUser(res.data));
-      navigate("/");
     } catch (error) {
-      console.error(error);
-      navigate("/login");
+      console.error("Error fetching user:", error);
+      if (location.pathname !== "/login") {
+        navigate("/login");
+      }
     }
   };
+
   useEffect(() => {
     fetchUser();
   }, []);

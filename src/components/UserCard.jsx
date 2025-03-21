@@ -47,8 +47,7 @@ const UserCard = ({ user }) => {
         </span>
 
         <p className="text-white text-lg overflow-ellipsis">
-          {about ||
-            "Last user of your feed, stop scrolling otherwise he'll grab you"}
+          {about || "Hey there, I am using devTinder!!!"}
         </p>
 
         <div className="flex flex-wrap gap-2 justify-center mt-2">
