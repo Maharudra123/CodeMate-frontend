@@ -12,6 +12,7 @@ import { ToastContainer } from "react-toastify";
 import { Bounce } from "react-toastify";
 import Connections from "./components/Connections";
 import Requests from "./components/Requests";
+import GoPremium from "./components/GoPremium";
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
             <Route path="profile" element={<Profile />} />
             <Route path="connections" element={<Connections />} />
             <Route path="requests" element={<Requests />} />
+            <Route path="gopremium" element={<GoPremium />} />
           </Route>
         </Routes>
       </BrowserRouter>
