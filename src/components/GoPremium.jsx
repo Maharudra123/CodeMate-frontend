@@ -1,17 +1,22 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BASE_URL } from "../utils/contants";
 
 const GoPremium = () => {
-  const verifyPayment = async () => {
+  const [isUserPremium, setIsUserPremium] = useState(false);
+
+  const verifyPremium = async () => {
     const res = await axios.get(BASE_URL + "/payment/verify", {
       withCredentials: true,
     });
     console.log(res.data);
+    if (res.data.isPremium) {
+      setIsUserPremium(true);
+    }
   };
   useEffect(() => {
-    verifyPayment();
-  });
+    verifyPremium();
+  }, []);
   const handleBuyMembership = async (membershipType) => {
     const order = await axios.post(
       BASE_URL + "/payment/create",
@@ -41,7 +46,12 @@ const GoPremium = () => {
     const rzp = new window.Razorpay(options);
     rzp.open();
   };
-  return (
+  // console.log(isUserPremium);
+  return isUserPremium ? (
+    <h1 className="text-5xl font-bold text-center text-white mx-0 my-auto">
+      You are already a premium user
+    </h1>
+  ) : (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold text-center mb-8">
         Choose Your Membership
