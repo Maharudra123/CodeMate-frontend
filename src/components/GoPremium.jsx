@@ -1,8 +1,17 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import { BASE_URL } from "../utils/contants";
 
 const GoPremium = () => {
+  const verifyPayment = async () => {
+    const res = await axios.get(BASE_URL + "/payment/verify", {
+      withCredentials: true,
+    });
+    console.log(res.data);
+  };
+  useEffect(() => {
+    verifyPayment();
+  });
   const handleBuyMembership = async (membershipType) => {
     const order = await axios.post(
       BASE_URL + "/payment/create",
