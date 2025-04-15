@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/contants";
 import { removeUser } from "../utils/store/userSlice";
+import Logo from "../../public/Logo.png";
 
 const Navbar = () => {
   const user = useSelector((store) => store.user);
@@ -23,7 +24,7 @@ const Navbar = () => {
       <div className="navbar bg-base-300 shadow-sm py-6">
         <div className="flex-1">
           <Link to="/" className="btn btn-ghost text-xl">
-            <img src="../../public/Logo.png" className="w-30" />
+            <img src={Logo} className="w-30" />
           </Link>
         </div>
         {user && (
