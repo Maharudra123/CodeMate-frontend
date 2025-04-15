@@ -15,6 +15,7 @@ const UpdateProfile = ({ user }) => {
     gender: user?.gender || "",
     age: user?.age || "",
     skills: user?.skills || [],
+    isPremium: user?.isPremium || false,
   });
 
   // State for the skills input field as a string
@@ -193,9 +194,9 @@ const UpdateProfile = ({ user }) => {
             />
 
             {/* Skills tags visualization */}
-            <div className="flex flex-wrap gap-2 mt-2">
+            <div className="flex flex-wrap gap-2 mt-2 ">
               {formData.skills.map((skill, index) => (
-                <div key={index} className="badge badge-primary">
+                <div key={index} className="badge badge-primary px-2 py-1">
                   {skill}
                 </div>
               ))}
@@ -237,14 +238,16 @@ const UpdateProfile = ({ user }) => {
           </h2>
           <UserCard
             user={{
-              firstName: formData.firstName,
-              lastName: formData.lastName,
-              gender: formData.gender,
-              imgURL: formData.imgURL,
-              age: formData.age,
-              about: formData.about,
-              skills: formData.skills,
+              firstName: formData?.firstName,
+              lastName: formData?.lastName,
+              gender: formData?.gender,
+              imgURL: formData?.imgURL,
+              age: formData?.age,
+              about: formData?.about,
+              skills: formData?.skills,
+              isPremium: formData?.isPremium,
             }}
+            isTop={true}
           />
         </div>
       </div>

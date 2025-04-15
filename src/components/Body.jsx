@@ -23,8 +23,8 @@ const Body = () => {
       dispatch(addUser(res.data));
     } catch (error) {
       console.error("Error fetching user:", error);
-      if (location.pathname !== "/login") {
-        navigate("/login");
+      if (location.pathname !== "/landing") {
+        navigate("/landing");
       }
     }
   };
@@ -34,7 +34,7 @@ const Body = () => {
   }, []);
 
   return (
-    <div>
+    <div className="text-white bg-base-200">
       <Navbar />
       <Outlet />
       <Footer />

@@ -13,6 +13,8 @@ import { Bounce } from "react-toastify";
 import Connections from "./components/Connections";
 import Requests from "./components/Requests";
 import GoPremium from "./components/GoPremium";
+import Chat from "./components/Chat";
+import Landing from "./components/Landing";
 
 const App = () => {
   return (
@@ -22,11 +24,13 @@ const App = () => {
           {/* Main Layout */}
           <Route path="/" element={<Body />}>
             <Route index element={<Feed />} /> {/* Use 'index' for default */}
+            <Route path="/landing" element={<Landing />} />
             <Route path="login" element={<Login />} />
             <Route path="profile" element={<Profile />} />
             <Route path="connections" element={<Connections />} />
             <Route path="requests" element={<Requests />} />
             <Route path="gopremium" element={<GoPremium />} />
+            <Route path="chat/:targetUserId" element={<Chat />} />
           </Route>
         </Routes>
       </BrowserRouter>

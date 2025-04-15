@@ -20,10 +20,10 @@ const Navbar = () => {
   };
   return (
     <div>
-      <div className="navbar bg-base-300 shadow-sm">
+      <div className="navbar bg-base-300 shadow-sm py-6">
         <div className="flex-1">
           <Link to="/" className="btn btn-ghost text-xl">
-            DevTinder!!
+            <img src="../../public/Logo.png" className="w-30" />
           </Link>
         </div>
         {user && (
