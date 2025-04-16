@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { addUser } from "../utils/store/userSlice";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/contants";
+import { toast } from "react-toastify";
 
 const Login = () => {
   // Common state
@@ -51,8 +52,15 @@ const Login = () => {
           { firstName, lastName, emailId, password },
           { withCredentials: true }
         );
-        dispatch(addUser(response.data.data));
-        navigate("/profile");
+        {
+          /*        dispatch(addUser(response.data.data));
+           */
+        }
+        toast.success("Account created successfully! Please log in.");
+        setIsLogin(true);
+        setEmailId("");
+        setPassword("");
+        navigate("/login");
       }
     } catch (error) {
       console.error(error);
@@ -99,6 +107,7 @@ const Login = () => {
                     className="input input-bordered w-full"
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
+                    required
                   />
                 </div>
               </div>

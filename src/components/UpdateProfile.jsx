@@ -5,6 +5,7 @@ import { BASE_URL } from "../utils/contants";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/store/userSlice";
 import { toast } from "react-toastify";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const UpdateProfile = ({ user }) => {
   const [formData, setFormData] = useState({
@@ -17,7 +18,7 @@ const UpdateProfile = ({ user }) => {
     skills: user?.skills || [],
     isPremium: user?.isPremium || false,
   });
-
+  const navigate = useNavigate();
   // State for the skills input field as a string
   const [skillsInput, setSkillsInput] = useState(
     user?.skills ? user.skills.join(", ") : ""
@@ -80,6 +81,8 @@ const UpdateProfile = ({ user }) => {
 
       dispatch(addUser(res?.data?.data));
       toast.success("Profile updated successfully!");
+      navigate("/");
+      location.reload();
     } catch (error) {
       console.error(error);
       toast.error(error?.response?.data?.message || "Failed to update profile");
