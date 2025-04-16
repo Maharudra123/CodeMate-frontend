@@ -17,21 +17,13 @@ import Chat from "./components/Chat";
 import Landing from "./components/Landing";
 
 const AppRoutes = () => {
-  const [user, setUser] = useState(null);
-  const userSlector = useSelector((state) => state.user);
-
-  useEffect(() => {
-    if (userSlector) {
-      setUser(userSlector);
-    }
-  }, [userSlector]);
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Body />}>
           <Route index element={<Feed />} />
           <Route path="/landing" element={<Landing />} />
-          {!user && <Route path="login" element={<Login />} />}
+          <Route path="login" element={<Login />} />
           <Route path="profile" element={<Profile />} />
           <Route path="connections" element={<Connections />} />
           <Route path="requests" element={<Requests />} />
