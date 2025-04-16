@@ -55,11 +55,8 @@ const Landing = () => {
 
   return (
     <div className="flex flex-col">
-      {/* Hero section remains unchanged */}
-      <div className="min-h-screen bg-base-200 relative overflow-hidden">
-        {/* Main container with absolute positioning for better control */}
+      <div className="h-[80vh] md:min-h-screen bg-base-200 relative overflow-hidden">
         <main className="absolute inset-0 flex items-center">
-          {/* Left side with text content */}
           <div className="w-1/2 pl-8 md:pl-16 lg:pl-24 text-white z-10">
             <BoxReveal boxColor={"#249fd9"} duration={0.5}>
               <p className="text-3xl md:text-4xl lg:text-5xl font-semibold">
@@ -96,7 +93,6 @@ const Landing = () => {
             </BoxReveal>
           </div>
 
-          {/* Right side with Globe - positioned to the right edge */}
           <AnimatePresence mode="wait">
             {isGlobeVisible && (
               <motion.div
@@ -119,7 +115,6 @@ const Landing = () => {
         </main>
       </div>
 
-      {/* Improved Features Section */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-base-300">
         <div className="max-w-5xl mx-auto text-center mb-12">
           <h2 className="text-4xl font-bold tracking-tight text-white sm:text-5xl mb-2">

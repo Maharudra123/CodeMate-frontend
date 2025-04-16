@@ -34,7 +34,6 @@ const Requests = () => {
       const res = await axios.get(BASE_URL + "/user/requests/recived", {
         withCredentials: true,
       });
-      console.log(res);
       dispatch(addRequest(res?.data?.data));
       setIsLoading(false);
     } catch (error) {
@@ -140,7 +139,7 @@ const Requests = () => {
     <div className="container mx-auto px-4 py-8">
       <div className="text-center mb-8">
         <h2 className="text-3xl font-bold">Connection Requests</h2>
-        <div className="badge badge-primary badge-lg mt-2">
+        <div className="badge badge-primary badge-lg mt-2 py-2 px-4">
           {requests.length} {requests.length === 1 ? "Request" : "Requests"}
         </div>
       </div>

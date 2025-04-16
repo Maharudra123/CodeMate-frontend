@@ -21,13 +21,13 @@ const Navbar = () => {
   };
   return (
     <div>
-      <div className="navbar bg-base-300 shadow-sm py-6">
+      <div className="navbar bg-base-300 shadow-sm py-6 fixed top-0 z-[200]">
         <div className="flex-1">
-          <Link to="/" className="btn btn-ghost text-xl">
+          <Link to={user ? "/" : "/landing"} className="btn btn-ghost text-xl">
             <img src={Logo} className="w-30" />
           </Link>
         </div>
-        {user && (
+        {user ? (
           <div className="flex gap-2">
             <p className="text-accent">welcome, {user.firstName}</p>
             <div className="dropdown dropdown-end mx-5">
@@ -65,6 +65,10 @@ const Navbar = () => {
               </ul>
             </div>
           </div>
+        ) : (
+          <Link to="/login" className="btn btn-ghost pl-2">
+            Login
+          </Link>
         )}
       </div>
     </div>

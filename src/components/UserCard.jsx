@@ -20,8 +20,6 @@ const UserCard = ({ user, index, isTop }) => {
     gender,
     isPremium,
   } = user || {};
-  console.log("user", user);
-  console.log("isPremium", isPremium);
 
   const dispatch = useDispatch();
   const [swipeDirection, setSwipeDirection] = useState(null);

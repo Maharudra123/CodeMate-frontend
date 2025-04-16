@@ -13,7 +13,6 @@ const Connections = () => {
       const res = await axios.get(BASE_URL + "/connections", {
         withCredentials: true,
       });
-      // console.log("Connections", res.data.data);
       dispatch(addConnection(res.data.data));
     } catch (err) {
       console.error(err);
@@ -46,7 +45,7 @@ const Connections = () => {
         return (
           <div
             key={_id}
-            className=" m-4 p-4 rounded-lg bg-base-300 w-1/2 mx-auto flex items-center justify-between"
+            className=" m-4 p-4 rounded-lg bg-base-300 md:rw-1/2 mx-auto flex  flex-col md:flex-row items-center justify-between"
           >
             <div className="flex items-center">
               <div>

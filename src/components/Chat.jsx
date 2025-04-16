@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { createSocketConnectection } from "../utils/socket";
 import { useSelector } from "react-redux";
@@ -17,16 +17,23 @@ const Chat = () => {
   const [lastSeen, setLastSeen] = useState(null);
 
   const currentUser = useSelector((store) => store.user);
+  const ref = useRef(null);
 
-  // Fetch initial messages and receiver info
+  const scrollToBottom = () => {
+    if (ref.current) {
+      ref.current.scrollTop = ref.current.scrollHeight;
+    }
+  };
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
   useEffect(() => {
     const fetchMessages = async () => {
       try {
         const chat = await axios.get(BASE_URL + "/chat/" + targetUserId, {
           withCredentials: true,
         });
-
-        console.log("Messages:", chat.data.chat.messages);
 
         if (chat?.data?.chat?.receiver) {
           setReceiverName(
@@ -36,14 +43,12 @@ const Chat = () => {
           );
         }
 
-        // Format messages consistently, including timestamp handling
         const chatMessages = chat?.data?.chat?.messages.map((msg) => {
           return {
             senderId: msg.senderId,
             firstName: msg.senderId?.firstName,
             lastName: msg.senderId?.lastName,
             message: msg.message,
-            // Check for all possible timestamp fields
             timestamp:
               msg.createdAt ||
               msg.timestamp ||
@@ -68,9 +73,12 @@ const Chat = () => {
 
       if (isNaN(date.getTime())) return "";
 
-      return date.toLocaleTimeString([], {
+      return date.toLocaleDateString([], {
+        month: "2-digit",
+        day: "2-digit",
         hour: "2-digit",
         minute: "2-digit",
+        hour12: false,
       });
     } catch (error) {
       console.error("Error formatting timestamp:", error);
@@ -167,9 +175,9 @@ const Chat = () => {
   // Format timestamp for display
 
   return (
-    <div className="flex flex-col h-screen bg-base-200 max-w-full lg:max-w-[75vw] mx-auto">
+    <div className="flex flex-col h-[40rem] md:h-[32rem] bg-base-200 max-w-full lg:max-w-[75vw] mx-auto border-1 border-base-content/10 rounded-lg shadow-lg overflow-scroll">
       {/* Chat header */}
-      <div className="navbar bg-base-300 shadow-lg">
+      <div className="navbar bg-base-300 shadow-lg ">
         <div className="flex-1 flex items-center gap-4">
           <div className="avatar online">
             <div className="w-10 rounded-full">
@@ -181,13 +189,16 @@ const Chat = () => {
           </div>
           <div>
             <h2 className="text-lg font-bold">{receiverName || "Chat"}</h2>
-            <p className="text-xs opacity-70">Last seen:{lastSeen}</p>
+            <p className="text-xs opacity-70">Last seen: {lastSeen}</p>
           </div>
         </div>
       </div>
 
       {/* Messages container */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-base-200">
+      <div
+        className="flex-1 overflow-y-auto p-4 space-y-3 bg-base-200 scroll-smooth"
+        ref={ref}
+      >
         {messages?.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full opacity-60">
             <svg
@@ -238,14 +249,7 @@ const Chat = () => {
                     </span>
                   </div>
                 </div>
-                <div className="chat-header">
-                  {`${msg.firstName || ""} ${msg.lastName || ""}`}
-                  {formattedTime && (
-                    <time className="text-xs opacity-50 ml-1">
-                      {formattedTime}
-                    </time>
-                  )}
-                </div>
+
                 <div
                   className={`chat-bubble ${
                     isOwnMessage
@@ -255,25 +259,11 @@ const Chat = () => {
                 >
                   {msg.message}
                 </div>
-                <div className="chat-footer opacity-50 text-xs">
-                  {isOwnMessage && (
-                    <span className="flex items-center">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-3 w-3 mr-1"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M5 13l4 4L19 7"
-                        />
-                      </svg>
-                      Seen
-                    </span>
+                <div className="chat-footer opacity-50 mt-0.5">
+                  {formattedTime && (
+                    <time className="text-xs opacity-50 ml-1">
+                      {formattedTime}
+                    </time>
                   )}
                 </div>
               </div>

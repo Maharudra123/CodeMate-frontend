@@ -15,7 +15,6 @@ const Feed = () => {
       const res = await axios.get(BASE_URL + "/feed", {
         withCredentials: true,
       });
-      console.log(res?.data);
       dispatch(addFeed(res?.data));
     } catch (err) {
       console.error(err);
@@ -27,7 +26,7 @@ const Feed = () => {
   }, []);
 
   return (
-    <div className="relative my-10 h-screen flex flex-col justify-center items-center gap-4">
+    <div className="relative  h-screen flex flex-col my-10 gap-4">
       {feed && feed.length > 0 ? (
         feed.map((user, index) => (
           <UserCard

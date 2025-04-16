@@ -9,7 +9,6 @@ const GoPremium = () => {
     const res = await axios.get(BASE_URL + "/payment/verify", {
       withCredentials: true,
     });
-    console.log(res.data);
     if (res.data.isPremium) {
       setIsUserPremium(true);
     }
