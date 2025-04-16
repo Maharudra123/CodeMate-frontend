@@ -99,7 +99,6 @@ const Login = () => {
                     className="input input-bordered w-full"
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
-                    required
                   />
                 </div>
               </div>
