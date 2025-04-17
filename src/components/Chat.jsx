@@ -49,6 +49,7 @@ const Chat = () => {
             firstName: msg.senderId?.firstName,
             lastName: msg.senderId?.lastName,
             message: msg.message,
+            // Check for all possible timestamp fields
             timestamp:
               msg.createdAt ||
               msg.timestamp ||
@@ -94,12 +95,14 @@ const Chat = () => {
     );
     setReceiverImgURL(userName?.data?.User?.imgURL || "");
     setLastSeen(formatTimestamp(userName?.data?.User?.lastSeen) || null);
+    console.log("Receiver info:", userName?.data?.User);
   };
 
   useEffect(() => {
     getUserName();
   }, []);
 
+  // Socket connection setup
   useEffect(() => {
     if (!userId) {
       console.log("No user ID found");
@@ -115,6 +118,42 @@ const Chat = () => {
       "messageRecived",
       ({ message, firstName, lastName, senderId, timeStamp }) => {
         console.log("Message received:", message, firstName, "at", timeStamp);
+
+        setMessages((prevMessages) => {
+          // Check if this is a duplicate of a local message
+          const existingMessageIndex = prevMessages.findIndex(
+            (msg) =>
+              msg.message === message &&
+              msg.senderId === senderId &&
+              msg.isLocal === true
+          );
+
+          if (existingMessageIndex !== -1) {
+            // Replace the local message with the server-confirmed one
+            const updatedMessages = [...prevMessages];
+            updatedMessages[existingMessageIndex] = {
+              message,
+              senderId,
+              firstName,
+              lastName,
+              timestamp: timeStamp || new Date().toISOString(),
+              // Remove the isLocal flag or set to false
+            };
+            return updatedMessages;
+          }
+
+          // If no duplicate found, add as new message
+          return [
+            ...prevMessages,
+            {
+              message,
+              senderId,
+              firstName,
+              lastName,
+              timestamp: timeStamp || new Date().toISOString(),
+            },
+          ];
+        });
       }
     );
 
@@ -128,6 +167,7 @@ const Chat = () => {
 
     const currentTime = new Date().toISOString();
 
+    // Add message to local state immediately for display
     setMessages((prevMessages) => [
       ...prevMessages,
       {
@@ -136,6 +176,7 @@ const Chat = () => {
         firstName: user?.firstName,
         lastName: user?.lastName,
         timestamp: currentTime,
+        isLocal: true,
       },
     ]);
 
@@ -158,8 +199,10 @@ const Chat = () => {
     }
   };
 
+  // Format timestamp for display
+
   return (
-    <div className="flex flex-col h-[50rem] md:h-[32rem] bg-base-200 max-w-full lg:max-w-[75vw] mx-auto border-1 border-base-content/10 rounded-lg shadow-lg overflow-scroll">
+    <div className="flex flex-col h-[40rem] md:h-[32rem] bg-base-200 max-w-full lg:max-w-[75vw] mx-auto border-1 border-base-content/10 rounded-lg shadow-lg overflow-scroll">
       {/* Chat header */}
       <div className="navbar bg-base-300 shadow-lg ">
         <div className="flex-1 flex items-center gap-4">
@@ -178,6 +221,7 @@ const Chat = () => {
         </div>
       </div>
 
+      {/* Messages container */}
       <div
         className="flex-1 overflow-y-auto p-4 space-y-3 bg-base-200 scroll-smooth"
         ref={ref}
@@ -211,6 +255,7 @@ const Chat = () => {
               (msg.firstName === user.firstName &&
                 msg.lastName === user.lastName);
 
+            // Get formatted timestamp
             const formattedTime = formatTimestamp(msg.timestamp);
 
             return (
