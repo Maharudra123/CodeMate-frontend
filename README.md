@@ -8,7 +8,7 @@ Check out the live demo: https://tinder-for-geeks.vercel.app/
 
 # ⚙️ Tech Stack
 
-Frontend: React, Tailwind CSS, Framer Motion
+Frontend: React, Tailwind CSS, Framer Motion, MagicUI
 
 Backend: Node.js, Express.js
 
@@ -27,8 +27,6 @@ Hosting: Vercel (Frontend), Render (Backend)
 💬 Real-time 1:1 chat powered by Socket.io
 
 🎨 Smooth animations with Framer Motion
-
-⚡ Performance optimized with caching and rate limiting
 
 🔒 Secure routes and token-based authentication
 
