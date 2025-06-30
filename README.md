@@ -1,80 +1,99 @@
-# DevTinder - Connecting Developers through Code 👋
+# 💻 CodeMate – Connect, Match & Collaborate with Developers
 
-A modern platform where developers can connect, match, and collaborate based on coding interests and skills.
+A modern developer matchmaking platform where coders can connect, swipe, and collaborate based on tech interests, skills, and vibes.
 
-# 🌟 Demo
+---
 
-Check out the live demo: https://tinder-for-geeks.vercel.app/
+## 🌐 Live Demo
 
-# ⚙️ Tech Stack
+- 🔗 **Frontend**: [https://code-mate-frontend-alpha.vercel.app/landing](https://code-mate-frontend-alpha.vercel.app/landing)  
+- 🔗 **Backend API**: [https://codemate-backend-ffrc.onrender.com](https://codemate-backend-ffrc.onrender.com)
 
-Frontend: React, Tailwind CSS, Framer Motion, MagicUI
+---
 
-Backend: Node.js, Express.js
+## ⚙️ Tech Stack
 
-Real-time Communication: Socket.io
+### 🔹 Frontend
+- **React.js**
+- **Tailwind CSS**
+- **Framer Motion**
+- **MagicUI**
+- **Vite**
+- Hosted on **Vercel**
 
-Database: MongoDB Atlas
+### 🔹 Backend
+- **Node.js**, **Express.js**
+- **MongoDB Atlas** (Cloud DB)
+- **Socket.io** for real-time chat
+- **JWT** for authentication
+- Hosted on **Render**
 
-Authentication: JWT
+---
 
-Hosting: Vercel (Frontend), Render (Backend)
+## ✨ Features
 
-# ✨ Features
+- 🔥 Developer-friendly swipe interface  
+- 💬 Real-time 1:1 chat using Socket.io  
+- 🎨 Sleek, animated UI with Framer Motion  
+- 🔐 JWT-based secure login and protected routes  
+- 📦 Clean, scalable modular codebase  
+- 📱 Fully responsive mobile-first design  
 
-🔥 Swipe-based interaction tailored for developers
+---
 
-💬 Real-time 1:1 chat powered by Socket.io
+## 🚀 Getting Started Locally
 
-🎨 Smooth animations with Framer Motion
+### ✅ Prerequisites
+- Node.js (v14+)
+- MongoDB (local or Atlas account)
 
-🔒 Secure routes and token-based authentication
+### 👤 Author
+ Maharudra Ganjure
 
-📁 Modular and scalable project structure
+🔗 GitHub: @maharudra123(https://github.com/Maharudra123/)
 
-# 🚀 Getting Started
+🌐 Portfolio: (https://maharudra.pythonanywhere.com)
 
-Prerequisites
+💼 LinkedIn: @maharudra-ganjure(https://www.linkedin.com/in/maharudra-ganjure/)
 
-Node.js (v14 or higher)
-MongoDB connection (local or Atlas)
+### 📦 Installation
 
-Installation
+Clone the repository:
+```bash
+git clone https://github.com/Maharudra123/CodeMate-frontend.git
+cd CodeMate-frontend
+Install dependencies:
 
-Clone the repository
-
-shgit clone https://github.com/yashbhidawe/devtinder-web.git
-cd devtinder-web
-
-Install dependencies
-
+bash
+Copy
+Edit
 npm install
+Set up environment variables:
 
-Set up environment variables
+Create a .env file in the root directory:
 
-Start the development server
+env
+Copy
+Edit
+VITE_BACKEND_URL=http://localhost:7777
+Run the frontend dev server:
 
-shnpm run dev
+bash
+Copy
+Edit
+npm run dev
+📄 Backend Repository & API Docs
+Find backend API code and documentation here:
+🔗 https://codemate-backend-ffrc.onrender.com
 
-📄 API Documentation
-API documentation is available at
+🤝 Contributing
+Contributions, issues, and feature requests are welcome!
+Feel free to fork this repo and submit pull requests.
 
-https://github.com/yashbhidawe/devTinder
 
-# 🤝 Contributing
 
-Contributions, issues and feature requests are welcome!
+⭐ Show your support
+If you find this project useful or cool, give it a ⭐️
+and share it with fellow developers!
 
-👤 Author
-Yash Bhidawe
-
-Website: LinkedIn
-Twitter: @itsokyash\_
-GitHub: @yashbhidawe
-LinkedIn: @itsokyash
-
-# ⭐ Show your support
-
-Give a ⭐️ if this project helped you!
-
-This README was generated with ❤️
+Made with ❤️ for developers by a developer.
