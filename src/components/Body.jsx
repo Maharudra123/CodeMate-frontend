@@ -11,7 +11,6 @@ const Body = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-
   const userData = useSelector((store) => store.user);
 
   const fetchUser = async () => {
@@ -34,9 +33,11 @@ const Body = () => {
   }, []);
 
   return (
-    <div className="text-white bg-base-200 pt-20">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white">
       <Navbar />
-      <Outlet />
+      <main className="flex-grow pt-20 px-4 sm:px-8">
+        <Outlet />
+      </main>
       <Footer />
     </div>
   );

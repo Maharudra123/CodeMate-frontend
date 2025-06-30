@@ -14,7 +14,8 @@ import Connections from "./components/Connections";
 import Requests from "./components/Requests";
 import GoPremium from "./components/GoPremium";
 import Chat from "./components/Chat";
-import Landing from "./components/Landing";
+//import Landing from "./components/Landing";
+import CodeMateLanding from "./components/CodeMateLanding";
 
 const AppRoutes = () => {
   return (
@@ -22,7 +23,8 @@ const AppRoutes = () => {
       <Routes>
         <Route path="/" element={<Body />}>
           <Route index element={<Feed />} />
-          <Route path="/landing" element={<Landing />} />
+          {/* <Route path="/landing" element={<Landing />} /> */}
+          <Route path="/landing" element={<CodeMateLanding />} />
           <Route path="login" element={<Login />} />
           <Route path="profile" element={<Profile />} />
           <Route path="connections" element={<Connections />} />

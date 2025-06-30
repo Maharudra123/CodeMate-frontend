@@ -24,6 +24,7 @@ const Chat = () => {
       ref.current.scrollTop = ref.current.scrollHeight;
     }
   };
+
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
@@ -49,7 +50,6 @@ const Chat = () => {
             firstName: msg.senderId?.firstName,
             lastName: msg.senderId?.lastName,
             message: msg.message,
-            // Check for all possible timestamp fields
             timestamp:
               msg.createdAt ||
               msg.timestamp ||
@@ -66,14 +66,12 @@ const Chat = () => {
 
     fetchMessages();
   }, [targetUserId]);
+
   const formatTimestamp = (timestamp) => {
     if (!timestamp) return "";
-
     try {
       const date = new Date(timestamp);
-
       if (isNaN(date.getTime())) return "";
-
       return date.toLocaleDateString([], {
         month: "2-digit",
         day: "2-digit",
@@ -86,6 +84,7 @@ const Chat = () => {
       return "";
     }
   };
+
   const getUserName = async () => {
     const userName = await axios.get(BASE_URL + "/chat/user/" + targetUserId);
     setReceiverName(
@@ -102,25 +101,17 @@ const Chat = () => {
     getUserName();
   }, []);
 
-  // Socket connection setup
   useEffect(() => {
-    if (!userId) {
-      console.log("No user ID found");
-      return;
-    }
+    if (!userId) return;
 
     const newSocket = createSocketConnectection();
     setSocket(newSocket);
-    console.log("Socket connected", newSocket);
     newSocket.emit("joinChat", { userId, targetUserId });
 
     newSocket.on(
       "messageRecived",
       ({ message, firstName, lastName, senderId, timeStamp }) => {
-        console.log("Message received:", message, firstName, "at", timeStamp);
-
         setMessages((prevMessages) => {
-          // Check if this is a duplicate of a local message
           const existingMessageIndex = prevMessages.findIndex(
             (msg) =>
               msg.message === message &&
@@ -129,7 +120,6 @@ const Chat = () => {
           );
 
           if (existingMessageIndex !== -1) {
-            // Replace the local message with the server-confirmed one
             const updatedMessages = [...prevMessages];
             updatedMessages[existingMessageIndex] = {
               message,
@@ -137,12 +127,10 @@ const Chat = () => {
               firstName,
               lastName,
               timestamp: timeStamp || new Date().toISOString(),
-              // Remove the isLocal flag or set to false
             };
             return updatedMessages;
           }
 
-          // If no duplicate found, add as new message
           return [
             ...prevMessages,
             {
@@ -167,7 +155,6 @@ const Chat = () => {
 
     const currentTime = new Date().toISOString();
 
-    // Add message to local state immediately for display
     setMessages((prevMessages) => [
       ...prevMessages,
       {
@@ -180,7 +167,6 @@ const Chat = () => {
       },
     ]);
 
-    // Send message to socket
     socket.emit("sendMessage", {
       message,
       firstName: user?.firstName,
@@ -199,136 +185,133 @@ const Chat = () => {
     }
   };
 
-  // Format timestamp for display
-
   return (
-    <div className="flex flex-col h-[40rem] md:h-[32rem] bg-base-200 max-w-full lg:max-w-[75vw] mx-auto border-1 border-base-content/10 rounded-lg shadow-lg overflow-scroll">
-      {/* Chat header */}
-      <div className="navbar bg-base-300 shadow-lg ">
-        <div className="flex-1 flex items-center gap-4">
-          <div className="avatar online">
-            <div className="w-10 rounded-full">
-              <img
-                alt="User avatar"
-                src={receiverImgURL || "https://placeimg.com/192/192/people"}
-              />
-            </div>
-          </div>
-          <div>
-            <h2 className="text-lg font-bold">{receiverName || "Chat"}</h2>
-            <p className="text-xs opacity-70">Last seen: {lastSeen}</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Messages container */}
-      <div
-        className="flex-1 overflow-y-auto p-4 space-y-3 bg-base-200 scroll-smooth"
-        ref={ref}
-      >
-        {messages?.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-full opacity-60">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-12 w-12 mb-2"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-              />
-            </svg>
-            <p className="text-lg font-medium">No messages yet</p>
-            <p className="text-sm">
-              Start the conversation by sending a message
-            </p>
-          </div>
-        ) : (
-          messages.map((msg, index) => {
-            // Check if this message is from the current user
-            const isOwnMessage =
-              msg.senderId === userId ||
-              (msg.firstName === user.firstName &&
-                msg.lastName === user.lastName);
-
-            // Get formatted timestamp
-            const formattedTime = formatTimestamp(msg.timestamp);
-
-            return (
-              <div
-                key={index}
-                className={`chat ${isOwnMessage ? "chat-end" : "chat-start"}`}
-              >
-                <div className="chat-image avatar placeholder">
-                  <div
-                    className={`w-10 rounded-full ${
-                      isOwnMessage ? "bg-primary" : "bg-secondary"
-                    }`}
-                  >
-                    <span className="text-white text-xs">
-                      <img
-                        src={isOwnMessage ? currentUser.imgURL : receiverImgURL}
-                      />
-                    </span>
-                  </div>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 pt-20 pb-6 px-4">
+      <div className="max-w-4xl mx-auto">
+        <div className="bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-xl border border-gray-700/50 rounded-3xl shadow-2xl shadow-purple-500/10 overflow-hidden h-[calc(100vh-8rem)] flex flex-col">
+          {/* Chat Header */}
+          <div className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 backdrop-blur-sm border-b border-gray-700/50 p-4 lg:p-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="relative">
+                  <img
+                    src={
+                      receiverImgURL || "https://placeimg.com/192/192/people"
+                    }
+                    alt="User avatar"
+                    className="w-12 h-12 lg:w-14 lg:h-14 rounded-full object-cover ring-2 ring-purple-500/50"
+                  />
+                  <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-gray-800"></div>
                 </div>
-
-                <div
-                  className={`chat-bubble ${
-                    isOwnMessage
-                      ? "chat-bubble-primary"
-                      : "chat-bubble-secondary"
-                  } shadow-sm`}
-                >
-                  {msg.message}
-                </div>
-                <div className="chat-footer opacity-50 mt-0.5">
-                  {formattedTime && (
-                    <time className="text-xs opacity-50 ml-1">
-                      {formattedTime}
-                    </time>
-                  )}
+                <div>
+                  <h2 className="text-lg lg:text-xl font-bold text-white">
+                    {receiverName || "Chat"}
+                  </h2>
+                  <p className="text-xs lg:text-sm text-purple-300">
+                    {lastSeen ? `Last seen: ${lastSeen}` : "Online"}
+                  </p>
                 </div>
               </div>
-            );
-          })
-        )}
-      </div>
+            </div>
+          </div>
 
-      {/* Message input */}
-      <div className="p-4 bg-base-300">
-        <div className="join w-full">
-          <input
-            type="text"
-            placeholder="Type a message..."
-            className="input input-bordered join-item flex-grow focus:outline-none"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            onKeyPress={handleKeyPress}
-          />
-          <button
-            className="btn btn-primary join-item"
-            onClick={handleSendMessage}
+          {/* Messages */}
+          <div
+            className="flex-1 overflow-y-auto p-4 lg:p-6 space-y-4"
+            ref={ref}
+            style={{
+              scrollbarWidth: "thin",
+              scrollbarColor: "#6B46C1 #374151",
+            }}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+            {messages.length === 0 ? (
+              <div className="flex flex-col items-center justify-center h-full text-center">
+                <h3 className="text-xl font-bold text-white mb-2">
+                  No messages yet
+                </h3>
+                <p className="text-gray-400">
+                  Start the conversation by sending a message
+                </p>
+              </div>
+            ) : (
+              messages.map((msg, index) => {
+                const isOwn = msg.senderId === userId;
+                const time = formatTimestamp(msg.timestamp);
+
+                return (
+                  <div
+                    key={index}
+                    className={`flex ${
+                      isOwn ? "justify-end" : "justify-start"
+                    } mb-2`}
+                  >
+                    <div
+                      className={`flex ${
+                        isOwn ? "flex-row-reverse" : "flex-row"
+                      } items-end gap-2 max-w-[80%]`}
+                    >
+                      <img
+                        src={isOwn ? currentUser.imgURL : receiverImgURL}
+                        alt="avatar"
+                        className="w-8 h-8 rounded-full object-cover ring-1 ring-gray-600"
+                      />
+                      <div className="group relative">
+                        <div
+                          className={`px-4 py-2 rounded-2xl shadow-lg ${
+                            isOwn
+                              ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-br-md"
+                              : "bg-gray-700/50 text-gray-100 rounded-bl-md border border-gray-600/50"
+                          }`}
+                        >
+                          <p className="text-sm">{msg.message}</p>
+                        </div>
+                        <div
+                          className={`text-xs text-gray-500 mt-1 ${
+                            isOwn ? "text-right" : "text-left"
+                          } opacity-0 group-hover:opacity-100`}
+                        >
+                          {time}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
+            )}
+          </div>
+
+          {/* Chat Input */}
+          <div className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 backdrop-blur-sm border-t border-gray-700/50 p-4 lg:p-6">
+            <div className="flex items-center gap-3">
+              <input
+                type="text"
+                placeholder="Type your message..."
+                className="flex-1 bg-gray-700/30 border border-gray-600/50 rounded-2xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                onKeyPress={handleKeyPress}
               />
-            </svg>
-          </button>
+              <button
+                onClick={handleSendMessage}
+                disabled={!message.trim()}
+                className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 disabled:from-gray-600 disabled:to-gray-600 text-white p-3 rounded-2xl transition-all duration-300 hover:scale-105 disabled:hover:scale-100 disabled:cursor-not-allowed"
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

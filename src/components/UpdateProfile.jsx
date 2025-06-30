@@ -92,151 +92,173 @@ const UpdateProfile = ({ user }) => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row justify-center items-start lg:items-stretch gap-8 min-h-screen bg-base-200 p-4">
+    <div className="flex flex-col lg:flex-row justify-center items-start lg:items-stretch gap-8 min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 p-4">
       {/* Profile Form */}
-      <div className="card w-full max-w-lg bg-base-100 shadow-xl">
-        <div className="card-body">
-          <h2 className="card-title text-2xl font-bold text-center justify-center mb-6">
+      <div className="w-full max-w-lg bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 rounded-2xl shadow-2xl overflow-hidden">
+        <div className="p-8">
+          <h2 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
             Update Profile
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* First Name */}
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text font-medium">First Name</span>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-300">
+                First Name
               </label>
               <input
                 type="text"
                 name="firstName"
                 value={formData.firstName}
                 onChange={handleChange}
-                className="input input-bordered w-full"
+                className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all duration-300"
                 placeholder="Enter first name"
               />
             </div>
 
             {/* Last Name */}
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text font-medium">Last Name</span>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-300">
+                Last Name
               </label>
               <input
                 type="text"
                 name="lastName"
                 value={formData.lastName}
                 onChange={handleChange}
-                className="input input-bordered w-full"
+                className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all duration-300"
                 placeholder="Enter last name"
               />
             </div>
           </div>
 
           {/* Age */}
-          <div className="form-control w-full">
-            <label className="label">
-              <span className="label-text font-medium">Age</span>
+          <div className="space-y-2 mt-6">
+            <label className="block text-sm font-medium text-gray-300">
+              Age
             </label>
             <input
               type="number"
               name="age"
               value={formData.age}
               onChange={handleChange}
-              className="input input-bordered w-full"
+              className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all duration-300"
               placeholder="Enter your age"
               min="0"
             />
           </div>
 
           {/* Gender */}
-          <div className="form-control w-full">
-            <label className="label">
-              <span className="label-text font-medium">Gender</span>
+          <div className="space-y-2 mt-6">
+            <label className="block text-sm font-medium text-gray-300">
+              Gender
             </label>
             <select
               name="gender"
               value={formData.gender}
               onChange={handleChange}
-              className="select select-bordered w-full"
+              className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600/50 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all duration-300"
             >
-              <option value="">Select gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
+              <option value="" className="bg-gray-800">
+                Select gender
+              </option>
+              <option value="male" className="bg-gray-800">
+                Male
+              </option>
+              <option value="female" className="bg-gray-800">
+                Female
+              </option>
+              <option value="other" className="bg-gray-800">
+                Other
+              </option>
             </select>
           </div>
 
           {/* Image URL */}
-          <div className="form-control w-full">
-            <label className="label">
-              <span className="label-text font-medium">Profile Image URL</span>
+          <div className="space-y-2 mt-6">
+            <label className="block text-sm font-medium text-gray-300">
+              Profile Image URL
             </label>
             <input
               type="text"
               name="imgURL"
               value={formData.imgURL}
               onChange={handleChange}
-              className="input input-bordered w-full"
+              className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all duration-300"
               placeholder="Enter profile image URL"
             />
           </div>
 
           {/* Skills */}
-          <div className="form-control w-full">
-            <label className="label">
-              <span className="label-text font-medium">Skills</span>
-              <span className="label-text-alt">Comma separated</span>
-            </label>
+          <div className="space-y-2 mt-6">
+            <div className="flex justify-between items-center">
+              <label className="block text-sm font-medium text-gray-300">
+                Skills
+              </label>
+              <span className="text-xs text-gray-400">Comma separated</span>
+            </div>
             <input
               type="text"
               name="skills"
               value={skillsInput}
               onChange={handleSkillsChange}
-              className="input input-bordered w-full"
+              className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all duration-300"
               placeholder="React, JavaScript, CSS"
             />
 
             {/* Skills tags visualization */}
-            <div className="flex flex-wrap gap-2 mt-2 ">
+            <div className="flex flex-wrap gap-2 mt-3">
               {formData.skills.map((skill, index) => (
-                <div key={index} className="badge badge-primary px-2 py-1">
+                <span
+                  key={index}
+                  className="px-3 py-1 text-xs font-medium bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 text-purple-300 rounded-full"
+                >
                   {skill}
-                </div>
+                </span>
               ))}
             </div>
           </div>
 
           {/* About */}
-          <div className="form-control w-full">
-            <label className="label">
-              <span className="label-text font-medium">About</span>
+          <div className="space-y-2 mt-6">
+            <label className="block text-sm font-medium text-gray-300">
+              About
             </label>
             <textarea
               name="about"
               value={formData.about}
               onChange={handleChange}
-              className="textarea textarea-bordered w-full h-24"
+              className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all duration-300 resize-none h-24"
               placeholder="Write something about yourself"
             />
           </div>
 
           {/* Submit Button */}
-          <div className="card-actions justify-end mt-6">
+          <div className="mt-8">
             <button
-              className={`btn btn-primary w-full ${isLoading ? "loading" : ""}`}
+              className={`w-full py-4 px-6 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500/50 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none ${
+                isLoading ? "animate-pulse" : ""
+              }`}
               onClick={update}
               disabled={isLoading}
             >
-              {isLoading ? "Updating..." : "Update Profile"}
+              {isLoading ? (
+                <div className="flex items-center justify-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                  Updating...
+                </div>
+              ) : (
+                "Update Profile"
+              )}
             </button>
           </div>
         </div>
       </div>
 
       {/* UserCard Preview */}
-      <div className="card w-full max-w-md bg-base-100 shadow-xl">
-        <div className="card-body">
-          <h2 className="card-title text-2xl font-bold text-center justify-center mb-6">
+      <div className="w-full max-w-md bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 rounded-2xl shadow-2xl overflow-hidden">
+        <div className="p-8">
+          <h2 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
             Profile Preview
           </h2>
           <UserCard
