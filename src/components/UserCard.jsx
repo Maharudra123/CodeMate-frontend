@@ -156,7 +156,7 @@ const UserCard = ({ user, index, isTop }) => {
         {/* About Section */}
         <div className="mb-4">
           <p className="text-gray-300 text-sm leading-relaxed max-h-20 overflow-y-auto custom-scrollbar">
-            {about || "Hey there, I am using devTinder!!!"}
+            {about || "Hey there, I am using CodeMate!!!"}
           </p>
         </div>
 
